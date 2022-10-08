@@ -10,6 +10,8 @@ public class MainManager : MonoBehaviour
     public int LineCount = 6;
     public Rigidbody Ball;
 
+    public static MainManager Instance;
+
     public Text ScoreText;
     public GameObject GameOverText;
     
@@ -20,6 +22,20 @@ public class MainManager : MonoBehaviour
 
     
     // Start is called before the first frame update
+    public void Awake()
+    {
+            {
+            if (Instance != null)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }
+
     void Start()
     {
         const float step = 0.6f;
@@ -72,5 +88,10 @@ public class MainManager : MonoBehaviour
     {
         m_GameOver = true;
         GameOverText.SetActive(true);
+    }
+
+    public void StartGame()
+    {
+        SceneManager.LoadScene(1);
     }
 }
